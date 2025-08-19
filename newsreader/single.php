@@ -19,31 +19,37 @@ get_header(); ?>
 	?>
 
 	<?php
-	while ( have_posts() ) :
-		the_post();
-		?>
+        while ( have_posts() ) :
+                the_post();
+                ?>
 
-		<?php
-		/**
-		 * The csco_post_before hook.
-		 *
-		 * @since 1.0.0
-		 */
-		do_action( 'csco_post_before' );
-		?>
+                <?php
+                /**
+                 * The csco_post_before hook.
+                 *
+                 * @since 1.0.0
+                 */
+                do_action( 'csco_post_before' );
+                ?>
 
-			<?php get_template_part( 'template-parts/content-singular' ); ?>
+                        <?php
+                        if ( has_post_format( 'video' ) ) {
+                                get_template_part( 'template-parts/content', 'video' );
+                        } else {
+                                get_template_part( 'template-parts/content-singular' );
+                        }
+                        ?>
 
-		<?php
-		/**
-		 * The csco_post_after hook.
-		 *
-		 * @since 1.0.0
-		 */
-		do_action( 'csco_post_after' );
-		?>
+                <?php
+                /**
+                 * The csco_post_after hook.
+                 *
+                 * @since 1.0.0
+                 */
+                do_action( 'csco_post_after' );
+                ?>
 
-	<?php endwhile; ?>
+        <?php endwhile; ?>
 
 	<?php
 	/**
