@@ -35,6 +35,8 @@
                         array( 'video', 'object', 'embed', 'iframe' )
                 );
 
+                if ( ! empty( $media ) ) {
+                        echo '<div class="entry-video-wrapper">' . $media[0] . '</div>';
                if ( ! empty( $media ) ) {
 
                        $ratio = get_post_meta( get_the_ID(), 'csco_video_aspect_ratio', true );
