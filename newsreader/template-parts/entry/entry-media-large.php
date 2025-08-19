@@ -23,22 +23,28 @@ if ( $media_display ) {
 		<div class="cs-entry__header cs-entry__header-overlay">
 			<div class="cs-entry__media cs-entry__media-large cs-entry__media-overlay cs-video-wrap">
 				<div class="cs-entry__media-inner">
-					<div class="cs-entry__media-wrap cs-overlay-ratio cs-ratio-fullwidth" data-scheme="inverse">
+                                        <div class="cs-entry__media-wrap cs-overlay-ratio cs-ratio-fullwidth" data-scheme="inverse">
+                                                <?php $video = has_post_format( 'video' ) ? csco_get_post_video() : false; ?>
+                                                <?php if ( $video ) : ?>
+                                                        <div class="cs-overlay-background cs-entry__video">
+                                                                <?php echo $video; ?>
+                                                        </div>
+                                                <?php else : ?>
+                                                        <figure class="cs-overlay-background">
+                                                                <?php the_post_thumbnail( $thumbnail_size_mobile ); ?>
+                                                                <?php the_post_thumbnail( $thumbnail_size ); ?>
 
-						<figure class="cs-overlay-background">
-							<?php the_post_thumbnail( $thumbnail_size_mobile ); ?>
-							<?php the_post_thumbnail( $thumbnail_size ); ?>
+                                                                <?php csco_get_video_background( 'large-header', null, 'large', true, true ); ?>
+                                                        </figure>
+                                                <?php endif; ?>
 
-							<?php csco_get_video_background( 'large-header', null, 'large', true, true ); ?>
-						</figure>
+                                                <?php csco_breadcrumbs(); ?>
 
-						<?php csco_breadcrumbs(); ?>
-
-						<div class="cs-entry__media-content">
-							<div class="cs-container">
-								<div class="cs-entry__header-content cs-overlay-content">
-									<div class="cs-entry__header-content-inner">
-										<?php get_template_part( 'template-parts/entry/entry-header-primary-info' ); ?>
+                                                <div class="cs-entry__media-content">
+                                                        <div class="cs-container">
+                                                                <div class="cs-entry__header-content cs-overlay-content">
+                                                                        <div class="cs-entry__header-content-inner">
+                                                                                <?php get_template_part( 'template-parts/entry/entry-header-primary-info' ); ?>
 									</div>
 								</div>
 							</div>

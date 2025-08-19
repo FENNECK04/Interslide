@@ -1715,8 +1715,15 @@ table thead td,
 .entry-content iframe,
 .entry-content object,
 .entry-content embed {
-	max-width: 100%;
-	overflow: hidden;
+        max-width: 100%;
+        overflow: hidden;
+}
+
+.cs-entry__video iframe,
+.cs-entry__video video {
+        width: 100%;
+        height: 100%;
+        display: block;
 }
 
 .alignnone {

@@ -623,6 +623,33 @@ if ( ! function_exists( 'csco_get_youtube_video_id' ) ) {
 	}
 }
 
+if ( ! function_exists( 'csco_get_post_video' ) ) {
+       /**
+        * Retrieve first embedded video from post content.
+        *
+        * @param int|null $post_id Post ID.
+        * @return string|false Video HTML or false if none found.
+        */
+       function csco_get_post_video( $post_id = null ) {
+               if ( ! $post_id ) {
+                       $post_id = get_the_ID();
+               }
+
+               $content = get_post_field( 'post_content', $post_id );
+               if ( ! $content ) {
+                       return false;
+               }
+
+               $media = get_media_embedded_in_content( apply_filters( 'the_content', $content ), array( 'video', 'object', 'embed', 'iframe' ) );
+
+               if ( ! empty( $media ) ) {
+                       return $media[0];
+               }
+
+               return false;
+       }
+}
+
 if ( ! function_exists( 'csco_get_video_background' ) ) {
 	/**
 	 * Get element video background
