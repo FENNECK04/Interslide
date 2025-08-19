@@ -1,0 +1,1235 @@
+<?php
+/**
+ * Elementor Block
+ *
+ * @package Newsreader
+ */
+
+namespace ThemeElementor\Widgets;
+
+use Elementor\Widget_Base;
+use Elementor\Repeater;
+use Elementor\Controls_Manager;
+use Elementor\Group_Control_Image_Size;
+use Elementor\Group_Control_Typography;
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+/**
+ * Elementor Block
+ *
+ * @since 1.0.0
+ */
+class CSCO_Carousel extends Widget_Base {
+
+	/**
+	 * Retrieve the widget name.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @access public
+	 *
+	 * @return string Widget name.
+	 */
+	public function get_name() {
+		return 'cs-carousel';
+	}
+
+	/**
+	 * Retrieve the widget title.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @access public
+	 *
+	 * @return string Widget title.
+	 */
+	public function get_title() {
+		return esc_html__( 'Carousel', 'newsreader' );
+	}
+
+	/**
+	 * Retrieve the widget icon.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @access public
+	 *
+	 * @return string Widget icon.
+	 */
+	public function get_icon() {
+		return 'cs-icon-el-burst_mode';
+	}
+
+	/**
+	 * Retrieve the list of categories the widget belongs to.
+	 *
+	 * Used to determine where to display the widget in the editor.
+	 *
+	 * Note that currently Elementor supports only one category.
+	 * When multiple categories passed, Elementor uses the first one.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @access public
+	 *
+	 * @return array Widget categories.
+	 */
+	public function get_categories() {
+		return array( 'theme' );
+	}
+
+	/**
+	 * Register the widget controls.
+	 *
+	 * Adds different input fields to allow the user to change and customize the widget settings.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @access protected
+	 */
+	protected function _register_controls() {
+
+		$this->start_controls_section(
+			'posts_content',
+			array(
+				'label' => esc_html__( 'Posts', 'newsreader' ),
+			)
+		);
+
+		$this->add_control(
+			'number_items',
+			array(
+				'label'     => esc_html__( 'Number of Items', 'newsreader' ),
+				'type'      => Controls_Manager::NUMBER,
+				'min'       => 1,
+				'max'       => 12,
+				'step'      => 1,
+				'default'   => 3,
+				'selectors' => array(
+					'{{WRAPPER}} .cs-carousel__swiper-post .cs-carousel__wrapper' => 'grid-template-columns: repeat({{VALUE}}, 1fr);',
+				),
+			)
+		);
+
+		$this->add_control(
+			'post_format',
+			array(
+				'label'        => esc_html__( 'Enable post format', 'newsreader' ),
+				'type'         => Controls_Manager::SWITCHER,
+				'return_value' => 'true',
+				'default'      => 'false',
+			)
+		);
+
+		$this->add_control(
+			'video',
+			array(
+				'label'        => esc_html__( 'Enable video backgrounds', 'newsreader' ),
+				'type'         => Controls_Manager::SWITCHER,
+				'return_value' => 'true',
+				'default'      => 'false',
+			)
+		);
+
+		$this->add_control(
+			'video_controls',
+			array(
+				'label'        => esc_html__( 'Enable video controls', 'newsreader' ),
+				'type'         => Controls_Manager::SWITCHER,
+				'return_value' => 'true',
+				'default'      => 'true',
+				'conditions'   => array(
+					'relation' => 'and',
+					'terms'    => array(
+						array(
+							'name'     => 'video',
+							'operator' => '==',
+							'value'    => 'true',
+						),
+					),
+				),
+			)
+		);
+
+		$this->add_control(
+			'excerpt',
+			array(
+				'label'        => esc_html__( 'Display item excerpt', 'newsreader' ),
+				'type'         => Controls_Manager::SWITCHER,
+				'return_value' => 'true',
+				'default'      => 'false',
+			)
+		);
+
+		$this->add_control(
+			'excerpt_length',
+			array(
+				'label'   => esc_html__( 'Excerpt length', 'newsreader' ),
+				'type'    => Controls_Manager::NUMBER,
+				'min'     => 1,
+				'max'     => 1000,
+				'step'    => 1,
+				'default' => 200,
+			)
+		);
+
+		$this->end_controls_section();
+
+		$this->start_controls_section(
+			'slider_settings',
+			array(
+				'label' => esc_html__( 'Slider', 'newsreader' ),
+			)
+		);
+
+		$this->add_control(
+			'post_per_view',
+			array(
+				'label'     => esc_html__( 'Tabs per View', 'newsreader' ),
+				'type'      => Controls_Manager::NUMBER,
+				'min'       => 1,
+				'max'       => 4,
+				'step'      => 1,
+				'default'   => 3,
+				'selectors' => array(
+					'{{WRAPPER}} .cs-carousel__swiper-tabs:not(.swiper-initialized) .cs-carousel__wrapper' => 'grid-template-columns: repeat(auto-fill, minmax(calc( 100% / {{VALUE}}), 1fr));',
+				),
+			)
+		);
+
+		$this->add_control(
+			'slide_settings',
+			array(
+				'label'     => esc_html__( 'Slide Change Settings', 'newsreader' ),
+				'type'      => \Elementor\Controls_Manager::HEADING,
+				'separator' => 'before',
+			)
+		);
+
+		$this->add_control(
+			'autoplay',
+			array(
+				'label'        => esc_html__( 'Enable Autoplay', 'newsreader' ),
+				'type'         => Controls_Manager::SWITCHER,
+				'return_value' => 'true',
+				'default'      => 'true',
+			)
+		);
+
+		$this->add_control(
+			'delay',
+			array(
+				'label'      => esc_html__( 'Autoplay Delay (ms)', 'newsreader' ),
+				'type'       => \Elementor\Controls_Manager::SLIDER,
+				'range'      => array(
+					'ms' => array(
+						'min'  => 2000,
+						'max'  => 10000,
+						'step' => 500,
+					),
+				),
+				'default'    => array(
+					'unit' => 'ms',
+					'size' => 5000,
+				),
+				'conditions' => array(
+					'relation' => 'and',
+					'terms'    => array(
+						array(
+							'name'     => 'autoplay',
+							'operator' => '==',
+							'value'    => 'true',
+						),
+					),
+				),
+			)
+		);
+
+		$this->add_control(
+			'speed',
+			array(
+				'label'   => esc_html__( 'Slide Change Speed (ms)', 'newsreader' ),
+				'type'    => \Elementor\Controls_Manager::SLIDER,
+				'range'   => array(
+					'ms' => array(
+						'min'  => 100,
+						'max'  => 1000,
+						'step' => 100,
+					),
+				),
+				'default' => array(
+					'unit' => 'ms',
+					'size' => 800,
+				),
+			)
+		);
+
+		$this->add_control(
+			'parallax_settings',
+			array(
+				'label'     => esc_html__( 'Parallax Settings', 'newsreader' ),
+				'type'      => \Elementor\Controls_Manager::HEADING,
+				'separator' => 'before',
+			)
+		);
+
+		$this->add_control(
+			'parallax',
+			array(
+				'label'        => esc_html__( 'Enable Parallax Effect', 'newsreader' ),
+				'type'         => \Elementor\Controls_Manager::SWITCHER,
+				'label_on'     => esc_html__( 'yes', 'newsreader' ),
+				'label_off'    => esc_html__( 'no', 'newsreader' ),
+				'return_value' => 'true',
+				'default'      => 'true',
+			)
+		);
+
+		$this->add_control(
+			'parallax_delay',
+			array(
+				'label'      => esc_html__( 'Parallax Delay (ms)', 'newsreader' ),
+				'type'       => \Elementor\Controls_Manager::SLIDER,
+				'range'      => array(
+					'ms' => array(
+						'min'  => 0,
+						'max'  => 1000,
+						'step' => 50,
+					),
+				),
+				'default'    => array(
+					'unit' => 'ms',
+					'size' => 700,
+				),
+				'conditions' => array(
+					'relation' => 'and',
+					'terms'    => array(
+						array(
+							'name'     => 'parallax',
+							'operator' => '==',
+							'value'    => 'true',
+						),
+					),
+				),
+			)
+		);
+
+		$this->add_control(
+			'parallax_distance',
+			array(
+				'label'      => esc_html__( 'Parallax Distance (px)', 'newsreader' ),
+				'type'       => \Elementor\Controls_Manager::SLIDER,
+				'range'      => array(
+					'px' => array(
+						'min'  => 0,
+						'max'  => 2000,
+						'step' => 100,
+					),
+				),
+				'default'    => array(
+					'unit' => 'px',
+					'size' => 200,
+				),
+				'conditions' => array(
+					'relation' => 'and',
+					'terms'    => array(
+						array(
+							'name'     => 'parallax',
+							'operator' => '==',
+							'value'    => 'true',
+						),
+					),
+				),
+			)
+		);
+
+		$this->end_controls_section();
+
+		$this->start_controls_section(
+			'meta',
+			array(
+				'label' => esc_html__( 'Meta Settings', 'newsreader' ),
+			)
+		);
+
+		$this->add_control(
+			'featured_meta_settings',
+			array(
+				'label' => esc_html__( 'Featured Post', 'newsreader' ),
+				'type'  => \Elementor\Controls_Manager::HEADING,
+			)
+		);
+
+		$this->add_control(
+			'featured_meta_category',
+			array(
+				'label'        => esc_html__( 'Category', 'newsreader' ),
+				'type'         => Controls_Manager::SWITCHER,
+				'return_value' => 'true',
+				'default'      => 'true',
+			)
+		);
+
+		$this->add_control(
+			'featured_meta_author',
+			array(
+				'label'        => esc_html__( 'Author', 'newsreader' ),
+				'type'         => Controls_Manager::SWITCHER,
+				'return_value' => 'true',
+				'default'      => 'true',
+			)
+		);
+
+		$this->add_control(
+			'featured_meta_date',
+			array(
+				'label'        => esc_html__( 'Date', 'newsreader' ),
+				'type'         => Controls_Manager::SWITCHER,
+				'return_value' => 'true',
+				'default'      => 'true',
+			)
+		);
+
+		$this->add_control(
+			'featured_meta_views',
+			array(
+				'label'        => esc_html__( 'Views', 'newsreader' ),
+				'type'         => Controls_Manager::SWITCHER,
+				'return_value' => 'true',
+				'default'      => 'false',
+			)
+		);
+
+		$this->add_control(
+			'featured_meta_comments',
+			array(
+				'label'        => esc_html__( 'Comments', 'newsreader' ),
+				'type'         => Controls_Manager::SWITCHER,
+				'return_value' => 'true',
+				'default'      => 'false',
+			)
+		);
+
+		$this->add_control(
+			'meta_hr',
+			array(
+				'type' => \Elementor\Controls_Manager::DIVIDER,
+			)
+		);
+
+		$this->add_control(
+			'regular_meta_settings',
+			array(
+				'label' => esc_html__( 'Inline Posts', 'newsreader' ),
+				'type'  => \Elementor\Controls_Manager::HEADING,
+			)
+		);
+
+		$this->add_control(
+			'meta_category',
+			array(
+				'label'        => esc_html__( 'Category', 'newsreader' ),
+				'type'         => Controls_Manager::SWITCHER,
+				'return_value' => 'true',
+				'default'      => 'true',
+			)
+		);
+
+		$this->add_control(
+			'meta_author',
+			array(
+				'label'        => esc_html__( 'Author', 'newsreader' ),
+				'type'         => Controls_Manager::SWITCHER,
+				'return_value' => 'true',
+				'default'      => 'true',
+			)
+		);
+
+		$this->add_control(
+			'meta_date',
+			array(
+				'label'        => esc_html__( 'Date', 'newsreader' ),
+				'type'         => Controls_Manager::SWITCHER,
+				'return_value' => 'true',
+				'default'      => 'true',
+			)
+		);
+
+		$this->add_control(
+			'meta_views',
+			array(
+				'label'        => esc_html__( 'Views', 'newsreader' ),
+				'type'         => Controls_Manager::SWITCHER,
+				'return_value' => 'true',
+				'default'      => 'false',
+			)
+		);
+
+		$this->add_control(
+			'meta_comments',
+			array(
+				'label'        => esc_html__( 'Comments', 'newsreader' ),
+				'type'         => Controls_Manager::SWITCHER,
+				'return_value' => 'true',
+				'default'      => 'false',
+			)
+		);
+
+		$this->end_controls_section();
+
+		$this->start_controls_section(
+			'thumbnail_settings',
+			array(
+				'label' => esc_html__( 'Thumbnail Settings', 'newsreader' ),
+			)
+		);
+
+		$this->add_control(
+			'attachment_size',
+			array(
+				'label'   => esc_html__( 'Size', 'newsreader' ),
+				'type'    => Controls_Manager::SELECT,
+				'default' => 'csco-extra-large-uncropped',
+				'options' => csco_get_list_available_image_sizes(),
+			)
+		);
+
+		$this->add_responsive_control(
+			'attachment_height',
+			array(
+				'label'           => esc_html__( 'Height', 'newsreader' ),
+				'type'            => Controls_Manager::SLIDER,
+				'range'           => array(
+					'px' => array(
+						'min' => 320,
+						'max' => 800,
+					),
+				),
+				'devices'         => array( 'desktop', 'laptop', 'tablet', 'mobile' ),
+				'default'         => array(
+					'size' => 520,
+					'unit' => 'px',
+				),
+				'desktop_default' => array(
+					'size' => 520,
+					'unit' => 'px',
+				),
+				'laptop_default'  => array(
+					'size' => 480,
+					'unit' => 'px',
+				),
+				'tablet_default'  => array(
+					'size' => 420,
+					'unit' => 'px',
+				),
+				'mobile_default'  => array(
+					'size' => 320,
+					'unit' => 'px',
+				),
+				'selectors'       => array(
+					'{{WRAPPER}}' => '--cs-carousel-height: {{SIZE}}{{UNIT}}',
+				),
+			)
+		);
+
+		$this->add_control(
+			'attachment_orientation',
+			array(
+				'label'   => esc_html__( 'Orientation', 'newsreader' ),
+				'type'    => Controls_Manager::SELECT,
+				'default' => 'landscape-16-9',
+				'options' => array(
+					'original'       => esc_html__( 'Original', 'newsreader' ),
+					'landscape'      => esc_html__( 'Landscape 4:3', 'newsreader' ),
+					'landscape-3-2'  => esc_html__( 'Landscape 3:2', 'newsreader' ),
+					'landscape-16-9' => esc_html__( 'Landscape 16:9', 'newsreader' ),
+					'landscape-21-9' => esc_html__( 'Landscape 21:9', 'newsreader' ),
+					'portrait'       => esc_html__( 'Portrait 3:4', 'newsreader' ),
+					'portrait-2-3'   => esc_html__( 'Portrait 2:3', 'newsreader' ),
+					'square'         => esc_html__( 'Square', 'newsreader' ),
+				),
+			)
+		);
+
+		$this->end_controls_section();
+
+		$this->start_controls_section(
+			'query',
+			array(
+				'label' => esc_html__( 'Query Settings', 'newsreader' ),
+			)
+		);
+
+		$this->add_control(
+			'filter_post_type',
+			array(
+				'label'   => esc_html__( 'Filter by Post Type', 'newsreader' ),
+				'type'    => Controls_Manager::SELECT,
+				'default' => 'post',
+				'options' => csco_get_post_types_stack(),
+			)
+		);
+
+		$this->add_control(
+			'filter_posts',
+			array(
+				'label'       => esc_html__( 'Filter by Posts', 'newsreader' ),
+				'type'        => Controls_Manager::TEXT,
+				'description' => esc_html__( 'Add comma-separated list of post IDs. For example: 12, 34, 145. Leave empty for all posts.', 'newsreader' ),
+				'conditions'  => array(
+					'relation' => 'and',
+					'terms'    => array(
+						array(
+							'name'     => 'filter_post_type',
+							'operator' => '==',
+							'value'    => 'post',
+						),
+					),
+				),
+			)
+		);
+
+		$this->add_control(
+			'filter_categories',
+			array(
+				'label'       => esc_html__( 'Filter by Categories', 'newsreader' ),
+				'type'        => Controls_Manager::TEXT,
+				'description' => esc_html__( 'Add comma-separated list of category IDs. For example: 12, 34, 145. Leave empty for all categories.', 'newsreader' ),
+				'conditions'  => array(
+					'relation' => 'and',
+					'terms'    => array(
+						array(
+							'name'     => 'filter_post_type',
+							'operator' => '==',
+							'value'    => 'post',
+						),
+						array(
+							'name'     => 'filter_posts',
+							'operator' => '==',
+							'value'    => '',
+						),
+					),
+				),
+			)
+		);
+
+		$this->add_control(
+			'filter_tags',
+			array(
+				'label'       => esc_html__( 'Filter by Tags', 'newsreader' ),
+				'type'        => Controls_Manager::TEXT,
+				'description' => esc_html__( 'Add comma-separated list of tag IDs. For example: 12, 34, 145. Leave empty for all tags.', 'newsreader' ),
+				'conditions'  => array(
+					'relation' => 'and',
+					'terms'    => array(
+						array(
+							'name'     => 'filter_post_type',
+							'operator' => '==',
+							'value'    => 'post',
+						),
+						array(
+							'name'     => 'filter_posts',
+							'operator' => '==',
+							'value'    => '',
+						),
+					),
+				),
+			)
+		);
+
+		$this->add_control(
+			'filter_offset',
+			array(
+				'label'      => esc_html__( 'Offset', 'newsreader' ),
+				'type'       => Controls_Manager::NUMBER,
+				'conditions' => array(
+					'relation' => 'and',
+					'terms'    => array(
+						array(
+							'name'     => 'filter_posts',
+							'operator' => '==',
+							'value'    => '',
+						),
+					),
+				),
+			)
+		);
+
+		$this->add_control(
+			'orderby',
+			array(
+				'label'      => esc_html__( 'Order By', 'newsreader' ),
+				'type'       => Controls_Manager::SELECT,
+				'default'    => 'date',
+				'options'    => array(
+					'date'          => esc_html__( 'Published Date', 'newsreader' ),
+					'modified'      => esc_html__( 'Modified Date', 'newsreader' ),
+					'title'         => esc_html__( 'Title', 'newsreader' ),
+					'rand'          => esc_html__( 'Random', 'newsreader' ),
+					'views'         => esc_html__( 'Views', 'newsreader' ),
+					'comment_count' => esc_html__( 'Comment Count', 'newsreader' ),
+					'ID'            => esc_html__( 'ID', 'newsreader' ),
+				),
+				'conditions' => array(
+					'relation' => 'and',
+					'terms'    => array(
+						array(
+							'name'     => 'filter_posts',
+							'operator' => '==',
+							'value'    => '',
+						),
+					),
+				),
+			)
+		);
+
+		$this->add_control(
+			'order',
+			array(
+				'label'      => esc_html__( 'Order', 'newsreader' ),
+				'type'       => Controls_Manager::SELECT,
+				'default'    => 'DESC',
+				'options'    => array(
+					'DESC' => esc_html__( 'Descending', 'newsreader' ),
+					'ASC'  => esc_html__( 'Ascending', 'newsreader' ),
+				),
+				'conditions' => array(
+					'relation' => 'and',
+					'terms'    => array(
+						array(
+							'name'     => 'filter_posts',
+							'operator' => '==',
+							'value'    => '',
+						),
+					),
+				),
+			)
+		);
+
+		$this->add_control(
+			'avoid_duplicate',
+			array(
+				'label'        => esc_html__( 'Avoid Duplicate Posts', 'newsreader' ),
+				'type'         => \Elementor\Controls_Manager::SWITCHER,
+				'label_on'     => esc_html__( 'yes', 'newsreader' ),
+				'label_off'    => esc_html__( 'no', 'newsreader' ),
+				'return_value' => 'yes',
+				'default'      => 'no',
+				'conditions'   => array(
+					'relation' => 'and',
+					'terms'    => array(
+						array(
+							'name'     => 'filter_posts',
+							'operator' => '==',
+							'value'    => '',
+						),
+					),
+				),
+			)
+		);
+
+		$this->end_controls_section();
+
+		$this->start_controls_section(
+			'featured_style',
+			array(
+				'label' => esc_html__( 'Featured Post', 'newsreader' ),
+				'tab'   => Controls_Manager::TAB_STYLE,
+			)
+		);
+
+		$this->add_control(
+			'featured_post_typography_settings',
+			array(
+				'label' => esc_html__( 'Typography', 'newsreader' ),
+				'type'  => \Elementor\Controls_Manager::HEADING,
+			)
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			array(
+				'name'     => 'featured_title_typography',
+				'label'    => esc_html__( 'Title', 'newsreader' ),
+				'selector' => '{{WRAPPER}} .cs-carousel__swiper-post .cs-entry__title',
+			)
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			array(
+				'name'     => 'featured_excerpt_typography',
+				'label'    => esc_html__( 'Excerpt', 'newsreader' ),
+				'selector' => '{{WRAPPER}} .cs-carousel__swiper-post .cs-entry__excerpt',
+			)
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			array(
+				'name'     => 'featured_meta_typography',
+				'label'    => esc_html__( 'Meta', 'newsreader' ),
+				'selector' => '{{WRAPPER}} .cs-carousel__swiper-post .cs-entry__post-meta',
+			)
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			array(
+				'name'     => 'featured_category_typography',
+				'label'    => esc_html__( 'Category', 'newsreader' ),
+				'selector' => '{{WRAPPER}} .cs-carousel__swiper-post .cs-entry__post-meta .cs-meta-category a',
+			)
+		);
+
+		$this->add_control(
+			'featured_padding_hr',
+			array(
+				'type' => \Elementor\Controls_Manager::DIVIDER,
+			)
+		);
+
+		$this->add_control(
+			'featured_post_content_settings',
+			array(
+				'label' => esc_html__( 'Content', 'newsreader' ),
+				'type'  => \Elementor\Controls_Manager::HEADING,
+			)
+		);
+
+		$this->add_responsive_control(
+			'content_padding',
+			array(
+				'label'           => esc_html__( 'Padding', 'newsreader' ),
+				'type'            => Controls_Manager::DIMENSIONS,
+				'size_units'      => array( 'px', '%', 'em', 'rem', 'custom' ),
+				'range'           => array(
+					'px' => array(
+						'min' => 0,
+						'max' => 100,
+					),
+				),
+				'devices'         => array( 'desktop', 'laptop', 'tablet', 'mobile' ),
+				'default'         => array(
+					'top'      => 40,
+					'right'    => 40,
+					'bottom'   => 40,
+					'left'     => 40,
+					'unit'     => 'px',
+					'isLinked' => true,
+				),
+				'desktop_default' => array(
+					'top'      => 40,
+					'right'    => 40,
+					'bottom'   => 40,
+					'left'     => 40,
+					'unit'     => 'px',
+					'isLinked' => true,
+				),
+				'laptop_default'  => array(
+					'top'      => 20,
+					'right'    => 20,
+					'bottom'   => 20,
+					'left'     => 20,
+					'unit'     => 'px',
+					'isLinked' => true,
+				),
+				'tablet_default'  => array(
+					'top'      => 20,
+					'right'    => 20,
+					'bottom'   => 20,
+					'left'     => 20,
+					'unit'     => 'px',
+					'isLinked' => true,
+				),
+				'mobile_default'  => array(
+					'top'      => 20,
+					'right'    => 20,
+					'bottom'   => 20,
+					'left'     => 20,
+					'unit'     => 'px',
+					'isLinked' => true,
+				),
+				'selectors'       => array(
+					'{{WRAPPER}}' => '--cs-carousel-content-padding-top: {{TOP}}{{UNIT}}; --cs-carousel-content-padding-right: {{RIGHT}}{{UNIT}}; --cs-carousel-content-padding-bottom: {{BOTTOM}}{{UNIT}}; --cs-carousel-content-padding-left: {{LEFT}}{{UNIT}};',
+				),
+			)
+		);
+
+		$this->end_controls_section();
+
+		$this->start_controls_section(
+			'regular_style',
+			array(
+				'label' => esc_html__( 'Inline Posts', 'newsreader' ),
+				'tab'   => Controls_Manager::TAB_STYLE,
+			)
+		);
+
+		$this->add_control(
+			'regular_posts_typography_settings',
+			array(
+				'label' => esc_html__( 'Typography', 'newsreader' ),
+				'type'  => \Elementor\Controls_Manager::HEADING,
+			)
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			array(
+				'name'     => 'title_typography',
+				'label'    => esc_html__( 'Title', 'newsreader' ),
+				'selector' => '{{WRAPPER}} .cs-carousel__swiper-tabs .cs-entry__title',
+			)
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			array(
+				'name'     => 'meta_typography',
+				'label'    => esc_html__( 'Meta', 'newsreader' ),
+				'selector' => '{{WRAPPER}} .cs-carousel__swiper-tabs .cs-entry__post-meta',
+			)
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			array(
+				'name'     => 'category_typography',
+				'label'    => esc_html__( 'Category', 'newsreader' ),
+				'selector' => '{{WRAPPER}} .cs-carousel__swiper-tabs .cs-entry__post-meta .cs-meta-category a',
+			)
+		);
+
+		$this->end_controls_section();
+	}
+
+	/**
+	 * Render the widget output on the frontend.
+	 *
+	 * Written in PHP and used to generate the final HTML.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @access protected
+	 */
+	protected function render() {
+		$settings = $this->get_settings_for_display();
+
+		// Section classes.
+		$grid_class    = 'cs-posts-area__main';
+		$article_class = 'cs-carousel__item';
+		$entry_class   = 'cs-entry__outer';
+
+		// Add 'Avoid Duplicates'.
+		global $featured_query_posts_ids;
+
+		if ( ! $featured_query_posts_ids ) {
+			$featured_query_posts_ids = array();
+		}
+
+		$number_items = 3;
+
+		if ( isset( $settings['number_items'] ) && $settings['number_items'] ) {
+			$number_items = $settings['number_items'];
+		}
+
+		$options = $settings;
+
+		$attributes = array();
+
+		// Default args.
+		$args = array(
+			'post_type'      => $settings['filter_post_type'],
+			'posts_per_page' => $number_items,
+		);
+
+		// Filter by posts.
+		if ( $settings['filter_posts'] ) {
+			$args['post__in'] = explode( ',', str_replace( ' ', '', $settings['filter_posts'] ) );
+		} elseif ( 'yes' === $settings['avoid_duplicate'] ) {
+			$args['post__not_in'] = $featured_query_posts_ids;
+		}
+
+		// Categories.
+		if ( 'post' === $settings['filter_post_type'] && $settings['filter_categories'] ) {
+			$settings['filter_categories'] = array_map( 'trim', explode( ',', $settings['filter_categories'] ) );
+
+			$args['tax_query'] = array(
+				array(
+					'taxonomy'         => 'category',
+					'field'            => 'id',
+					'operator'         => 'IN',
+					'terms'            => $settings['filter_categories'],
+					'include_children' => true,
+				),
+			);
+		}
+
+		// Filter by tags.
+		if ( $settings['filter_tags'] ) {
+			$args['tax_query'] = isset( $args['tax_query'] ) && is_array( $args['tax_query'] ) ? $args['tax_query'] : array();
+
+			$args['tax_query'][] = array(
+				'taxonomy' => 'post_tag',
+				'field'    => 'id',
+				'operator' => 'IN',
+				'terms'    => (array) $settings['filter_tags'],
+			);
+		}
+
+		// Offset.
+		if ( $settings['filter_offset'] ) {
+			$args['offset'] = $settings['filter_offset'];
+		}
+
+		// Orderby.
+		if ( $settings['orderby'] ) {
+			$args['orderby'] = $settings['orderby'];
+
+			if ( 'views' === $settings['orderby'] && csco_post_views_enabled() ) {
+				$args['orderby'] = 'post_views';
+
+				$args['views_query']['hide_empty'] = false;
+			}
+		}
+
+		// Order.
+		if ( $settings['order'] ) {
+			$args['order'] = $settings['order'];
+		}
+
+		$featured_meta = array();
+
+		if ( 'true' === $options['featured_meta_author'] ) {
+			$featured_meta[] = 'author';
+		}
+
+		if ( 'true' === $options['featured_meta_date'] ) {
+			$featured_meta[] = 'date';
+		}
+
+		if ( 'true' === $options['featured_meta_category'] ) {
+			$featured_meta[] = 'category';
+		}
+
+		if ( 'true' === $options['featured_meta_comments'] ) {
+			$featured_meta[] = 'comments';
+		}
+
+		if ( 'true' === $options['featured_meta_views'] ) {
+			$featured_meta[] = 'views';
+		}
+
+		$meta = array();
+
+		if ( 'true' === $options['meta_author'] ) {
+			$meta[] = 'author';
+		}
+
+		if ( 'true' === $options['meta_date'] ) {
+			$meta[] = 'date';
+		}
+
+		if ( 'true' === $options['meta_category'] ) {
+			$meta[] = 'category';
+		}
+
+		if ( 'true' === $options['meta_comments'] ) {
+			$meta[] = 'comments';
+		}
+
+		if ( 'true' === $options['meta_views'] ) {
+			$meta[] = 'views';
+		}
+
+		// Thumbnail size.
+		$thumbnail_size_mobile = 'csco-thumbnail-uncropped';
+		$thumbnail_size        = $options['attachment_size'];
+
+		// Swiper default settings.
+		$post_per_view     = 3;
+		$delay             = 5000;
+		$speed             = 800;
+		$parallax_distance = 200;
+		$parallax_delay    = 700;
+
+		if ( isset( $settings['post_per_view'] ) && $settings['post_per_view'] ) {
+			$post_per_view = $settings['post_per_view'];
+		}
+
+		if ( $settings['delay'] ) {
+			$delay = $settings['delay']['size'];
+		}
+
+		if ( $settings['speed'] ) {
+			$speed = $settings['speed']['size'];
+		}
+
+		if ( $settings['parallax_distance'] ) {
+			$parallax_distance = $settings['parallax_distance']['size'];
+		}
+
+		if ( $settings['parallax_delay'] ) {
+			$parallax_delay = $settings['parallax_delay']['size'];
+		}
+
+		$query = new \WP_Query( $args );
+
+		?>
+
+			<section
+			class="cs-carousel"
+			data-scheme="inverse"
+			data-cs-post-per-view="<?php echo esc_attr( $post_per_view ); ?>"
+			data-cs-autoplay="<?php echo esc_attr( $settings['autoplay'] ); ?>"
+			data-cs-autoplay-delay="<?php echo esc_attr( $delay ); ?>"
+			data-cs-slide-speed="<?php echo esc_attr( $speed ); ?>"
+			data-cs-parallax="<?php echo esc_attr( $settings['parallax'] ); ?>"
+			>
+				<?php
+				if ( $query->have_posts() ) {
+
+					if ( $settings['filter_posts'] ) {
+						$post_ids = is_array( $args['post__in'] ) ? $args['post__in'] : array_map( 'trim', explode( ',', $args['post__in'] ) );
+
+						usort( $query->posts, function( $a, $b ) use ( $post_ids ) {
+							$pos_a = array_search( $a->ID, $post_ids );
+							$pos_b = array_search( $b->ID, $post_ids );
+							return $pos_a - $pos_b;
+						});
+					}
+
+					$current = 1;
+					?>
+
+					<div class="cs-carousel__swiper-post swiper">
+						<div class="cs-carousel__wrapper">
+							<?php
+							while ( $query->have_posts() ) {
+								$query->the_post();
+								$featured_query_posts_ids[] = get_the_ID();
+								?>
+
+								<article <?php post_class($article_class); ?>>
+									<div class="<?php echo esc_attr( $entry_class ); ?> cs-entry__overlay cs-overlay-ratio cs-ratio-<?php echo esc_attr( $options['attachment_orientation'] ); ?>" data-scheme="inverse">
+
+										<div class="cs-entry__inner cs-entry__thumbnail">
+
+											<div class="cs-overlay-background">
+												<?php if ( has_post_thumbnail() ) { ?>
+													<?php the_post_thumbnail( $thumbnail_size_mobile ); ?>
+													<?php the_post_thumbnail( $thumbnail_size ); ?>
+												<?php } ?>
+											</div>
+
+											<?php
+											if ( 'true' === $options['video'] ) {
+												csco_get_video_background( 'elementor', null, 'default', 'true' === $options['video_controls'] ? true : false );
+											}
+											?>
+
+											<?php
+											if ( 'true' === $options['post_format'] ) {
+												csco_the_post_format_icon();
+											}
+											?>
+
+										</div>
+
+										<div
+										class="cs-entry__inner cs-entry__content cs-overlay-content"
+										data-swiper-parallax="-<?php echo esc_attr( $parallax_distance ); ?>"
+										data-swiper-parallax-duration="<?php echo esc_attr( $parallax_delay ); ?>"
+										>
+											<?php csco_get_post_meta( array( 'category' ), true, $featured_meta ); ?>
+
+											<?php the_title( '<h2 class="cs-entry__title">', '</h2>' ); ?>
+
+											<?php
+											if ( 'true' === $options['excerpt'] ) {
+												$content = csco_get_the_excerpt( $options['excerpt_length'] );
+
+												if ( $content ) {
+													?>
+													<div class="cs-entry__excerpt">
+														<?php echo esc_html( $content ); ?>
+													</div>
+													<?php
+												}
+											}
+											?>
+
+											<?php csco_get_post_meta( array( 'author', 'date', 'views', 'comments' ), true, $featured_meta ); ?>
+										</div>
+
+										<a class="cs-overlay-link" href="<?php the_permalink(); ?>" title="<?php echo esc_attr( get_the_title() ); ?>"></a>
+									</div>
+								</article>
+
+								<?php
+								++$current;
+							}
+
+							wp_reset_postdata();
+							?>
+						</div>
+					</div>
+
+					<?php if ( $current > 1 ) { ?>
+						<div class="cs-carousel__button-prev"></div>
+						<div class="cs-carousel__button-next"></div>
+					<?php } ?>
+
+					<div class="cs-carousel__swiper-tabs swiper">
+
+						<div class="cs-carousel__progress">
+							<div class="cs-carousel__progress-bar"></div>
+						</div>
+
+						<div class="cs-carousel__wrapper">
+							<?php
+							while ( $query->have_posts() ) {
+								$query->the_post();
+								$featured_query_posts_ids[] = get_the_ID();
+								?>
+
+								<article <?php post_class($article_class); ?>>
+									<div class="<?php echo esc_attr( $entry_class ); ?> cs-entry__overlay">
+
+										<div class="cs-entry__inner cs-entry__content cs-overlay-content">
+											<?php csco_get_post_meta( array( 'category' ), true, $meta ); ?>
+
+											<?php the_title( '<h2 class="cs-entry__title">', '</h2>' ); ?>
+
+											<?php csco_get_post_meta( array( 'author', 'date', 'views', 'comments' ), true, $meta ); ?>
+										</div>
+
+									</div>
+								</article>
+
+								<?php
+							}
+
+							wp_reset_postdata();
+							?>
+						</div>
+					</div>
+
+					<?php
+				} else {
+					?>
+					<div class="cs-items-not-found">
+						<p><?php esc_html_e( 'Nothing found!', 'newsreader' ); ?></p>
+					</div>
+					<?php
+				}
+				?>
+			</section>
+
+		<?php
+	}
+}

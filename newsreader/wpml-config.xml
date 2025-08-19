@@ -1,0 +1,22 @@
+<wpml-config>
+	<admin-texts>
+		<key name="theme_mods_newsreader">
+			<key name="header_custom_button_label" />
+			<key name="follow_text" />
+			<key name="archive_banner_label_text" />
+			<key name="branding_desc" />
+			<key name="misc_social_1_label" />
+			<key name="misc_social_2_label" />
+			<key name="misc_social_3_label" />
+			<key name="misc_social_4_label" />
+			<key name="misc_social_5_label" />
+			<key name="misc_subscribe_heading" />
+			<key name="misc_subscribe_description" />
+			<key name="post_read_next_heading" />
+			<key name="post_banner_inside_label_text" />
+			<key name="post_banner_after_label_text" />
+			<key name="footer_text" />
+			<key name="footer_copyright" />
+		</key>
+	</admin-texts>
+</wpml-config>
