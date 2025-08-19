@@ -62,8 +62,10 @@ if ( ! function_exists( 'csco_enqueue_scripts' ) ) {
 
 		wp_dequeue_script( sprintf( '%s-reply', 'comment' ) );
 
-
-                // Enqueue theme styles early to prevent missing CSS on fresh installs.
+    // Enqueue theme styles early to prevent missing CSS on fresh installs.
+                $style_uri = csco_style( get_stylesheet_uri() );
+                wp_enqueue_style( 'csco-styles', $style_uri, array(), $version );
+    // Enqueue theme styles early to prevent missing CSS on fresh installs.
                 $style_uri = csco_style( get_stylesheet_uri() );
                 wp_enqueue_style( 'csco-styles', $style_uri, array(), $version );
 

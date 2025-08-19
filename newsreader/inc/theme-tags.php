@@ -576,39 +576,7 @@ if ( ! function_exists( 'csco_misc_social_links' ) ) {
                $social_1_url   = get_theme_mod( 'misc_social_1_link' );
                $social_1_image = get_theme_mod( 'misc_social_1_icon' );
                $social_1_alt   = get_theme_mod( 'misc_social_1_label' );
-               if ( $social_1_image ) {
-                       $social_1_id = attachment_url_to_postid( $social_1_image );
-               }
 
-               $social_2       = get_theme_mod( 'misc_social_2', false );
-               $social_2_url   = get_theme_mod( 'misc_social_2_link' );
-               $social_2_image = get_theme_mod( 'misc_social_2_icon' );
-               $social_2_alt   = get_theme_mod( 'misc_social_2_label' );
-               if ( $social_2_image ) {
-                       $social_2_id = attachment_url_to_postid( $social_2_image );
-               }
-
-               $social_3       = get_theme_mod( 'misc_social_3', false );
-               $social_3_url   = get_theme_mod( 'misc_social_3_link' );
-               $social_3_image = get_theme_mod( 'misc_social_3_icon' );
-               $social_3_alt   = get_theme_mod( 'misc_social_3_label' );
-               if ( $social_3_image ) {
-                       $social_3_id = attachment_url_to_postid( $social_3_image );
-               }
-
-               $social_4       = get_theme_mod( 'misc_social_4', false );
-               $social_4_url   = get_theme_mod( 'misc_social_4_link' );
-               $social_4_image = get_theme_mod( 'misc_social_4_icon' );
-               $social_4_alt   = get_theme_mod( 'misc_social_4_label' );
-               if ( $social_4_image ) {
-                       $social_4_id = attachment_url_to_postid( $social_4_image );
-               }
-
-               $social_5       = get_theme_mod( 'misc_social_5', false );
-               $social_5_url   = get_theme_mod( 'misc_social_5_link' );
-               $social_5_image = get_theme_mod( 'misc_social_5_icon' );
-               $social_5_alt   = get_theme_mod( 'misc_social_5_label' );
-               if ( $social_5_image ) {
                        $social_5_id = attachment_url_to_postid( $social_5_image );
                }
                ?>
