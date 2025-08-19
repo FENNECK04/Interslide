@@ -104,14 +104,14 @@ body[data-scheme=dark] {
 	--cs-color-primary-contrast: #FFFFFF;
 	--cs-color-secondary: var(--cs-light-secondary-color, #585858);
 	--cs-color-secondary-contrast: #FFFFFF;
-	--cs-color-accent: var(--cs-light-accent-color, #0038ff);
+	--cs-color-accent: var(--cs-light-accent-color, #d00000);
 	--cs-color-border: var(--cs-light-border-color, #D9D9D9);
 	--cs-color-video-icon: var(--cs-light-video-icon-color);
 	--cs-color-input: var(--cs-light-input-background, #FFFFFF);
 	--cs-color-input-contrast: var(--cs-light-input-color);
-	--cs-color-button: var(--cs-light-button-background, #0038ff);
+	--cs-color-button: var(--cs-light-button-background, #d00000);
 	--cs-color-button-contrast: var(--cs-light-button-color, #FFFFFF);
-	--cs-color-button-hover: var(--cs-light-button-hover-background, #0033e9);
+	--cs-color-button-hover: var(--cs-light-button-hover-background, #a80000);
 	--cs-color-button-hover-contrast: var(--cs-light-button-hover-color, #FFFFFF);
 	--cs-light-overlay-background-rgb: #161616;
 	--cs-color-overlay-background: var(--cs-light-overlay-background-rgb);
@@ -138,14 +138,14 @@ body[data-scheme=dark] {
 		--cs-color-primary-contrast: #FFFFFF;
 		--cs-color-secondary: var(--cs-light-secondary-color, #585858);
 		--cs-color-secondary-contrast: #FFFFFF;
-		--cs-color-accent: var(--cs-light-accent-color, #0038ff);
+		--cs-color-accent: var(--cs-light-accent-color, #d00000);
 		--cs-color-border: var(--cs-light-border-color, #D9D9D9);
 		--cs-color-video-icon: var(--cs-light-video-icon-color);
 		--cs-color-input: var(--cs-light-input-background, #FFFFFF);
 		--cs-color-input-contrast: var(--cs-light-input-color);
-		--cs-color-button: var(--cs-light-button-background, #0038ff);
+		--cs-color-button: var(--cs-light-button-background, #d00000);
 		--cs-color-button-contrast: var(--cs-light-button-color, #FFFFFF);
-		--cs-color-button-hover: var(--cs-light-button-hover-background, #0033e9);
+		--cs-color-button-hover: var(--cs-light-button-hover-background, #a80000);
 		--cs-color-button-hover-contrast: var(--cs-light-button-hover-color, #FFFFFF);
 		--cs-light-overlay-background-rgb: #161616;
 		--cs-color-overlay-background: var(--cs-light-overlay-background-rgb);
@@ -172,14 +172,14 @@ body[data-scheme=dark] {
 		--cs-color-primary-contrast: #FFFFFF;
 		--cs-color-secondary: var(--cs-light-secondary-color, #585858);
 		--cs-color-secondary-contrast: #FFFFFF;
-		--cs-color-accent: var(--cs-light-accent-color, #0038ff);
+		--cs-color-accent: var(--cs-light-accent-color, #d00000);
 		--cs-color-border: var(--cs-light-border-color, #D9D9D9);
 		--cs-color-video-icon: var(--cs-light-video-icon-color);
 		--cs-color-input: var(--cs-light-input-background, #FFFFFF);
 		--cs-color-input-contrast: var(--cs-light-input-color);
-		--cs-color-button: var(--cs-light-button-background, #0038ff);
+		--cs-color-button: var(--cs-light-button-background, #d00000);
 		--cs-color-button-contrast: var(--cs-light-button-color, #FFFFFF);
-		--cs-color-button-hover: var(--cs-light-button-hover-background, #0033e9);
+		--cs-color-button-hover: var(--cs-light-button-hover-background, #a80000);
 		--cs-color-button-hover-contrast: var(--cs-light-button-hover-color, #FFFFFF);
 		--cs-light-overlay-background-rgb: #161616;
 		--cs-color-overlay-background: var(--cs-light-overlay-background-rgb);
@@ -206,14 +206,14 @@ body[data-scheme=dark] {
 		--cs-color-primary-contrast: #000000;
 		--cs-color-secondary: var(--cs-dark-secondary-color, #CDCDCD);
 		--cs-color-secondary-contrast: #000000;
-		--cs-color-accent: var(--cs-dark-accent-color, #ffffff);
+		--cs-color-accent: var(--cs-dark-accent-color, #d00000);
 		--cs-color-border: var(--cs-dark-border-color, #343434);
 		--cs-color-video-icon: var(--cs-dark-video-icon-color);
 		--cs-color-input: var(--cs-dark-input-background, #FFFFFF);
 		--cs-color-input-contrast: var(--cs-dark-input-color);
-		--cs-color-button: var(--cs-dark-button-background, #0038ff);
+		--cs-color-button: var(--cs-dark-button-background, #d00000);
 		--cs-color-button-contrast: var(--cs-dark-button-color, #FFFFFF);
-		--cs-color-button-hover: var(--cs-dark-button-hover-background, #0033e9);
+		--cs-color-button-hover: var(--cs-dark-button-hover-background, #a80000);
 		--cs-color-button-hover-contrast:var(--cs-dark-button-hover-color, #FFFFFF);
 		--cs-dark-overlay-background-rgb: #161616;
 		--cs-color-overlay-background: var(--cs-dark-overlay-background-rgb);
@@ -239,14 +239,14 @@ body[data-scheme=dark] {
 	--cs-color-primary-contrast: #000000;
 	--cs-color-secondary: var(--cs-dark-secondary-color, #CDCDCD);
 	--cs-color-secondary-contrast: #000000;
-	--cs-color-accent: var(--cs-dark-accent-color, #ffffff);
+	--cs-color-accent: var(--cs-dark-accent-color, #d00000);
 	--cs-color-border: var(--cs-dark-border-color, #343434);
 	--cs-color-video-icon: var(--cs-dark-video-icon-color);
 	--cs-color-input: var(--cs-dark-input-background, #FFFFFF);
 	--cs-color-input-contrast: var(--cs-dark-input-color);
-	--cs-color-button: var(--cs-dark-button-background, #0038ff);
+	--cs-color-button: var(--cs-dark-button-background, #d00000);
 	--cs-color-button-contrast: var(--cs-dark-button-color, #FFFFFF);
-	--cs-color-button-hover: var(--cs-dark-button-hover-background, #0033e9);
+	--cs-color-button-hover: var(--cs-dark-button-hover-background, #a80000);
 	--cs-color-button-hover-contrast:var(--cs-dark-button-hover-color, #FFFFFF);
 	--cs-dark-overlay-background-rgb: #161616;
 	--cs-color-overlay-background: var(--cs-dark-overlay-background-rgb);
@@ -273,14 +273,14 @@ body[data-scheme=dark] {
 		--cs-color-primary-contrast: #000000;
 		--cs-color-secondary: var(--cs-dark-secondary-color, #CDCDCD);
 		--cs-color-secondary-contrast: #000000;
-		--cs-color-accent: var(--cs-dark-accent-color, #ffffff);
+		--cs-color-accent: var(--cs-dark-accent-color, #d00000);
 		--cs-color-border: var(--cs-dark-border-color, #343434);
 		--cs-color-video-icon: var(--cs-dark-video-icon-color);
 		--cs-color-input: var(--cs-dark-input-background, #FFFFFF);
 		--cs-color-input-contrast: var(--cs-dark-input-color);
-		--cs-color-button: var(--cs-dark-button-background, #0038ff);
+		--cs-color-button: var(--cs-dark-button-background, #d00000);
 		--cs-color-button-contrast: var(--cs-dark-button-color, #FFFFFF);
-		--cs-color-button-hover: var(--cs-dark-button-hover-background, #0033e9);
+		--cs-color-button-hover: var(--cs-dark-button-hover-background, #a80000);
 		--cs-color-button-hover-contrast:var(--cs-dark-button-hover-color, #FFFFFF);
 		--cs-dark-overlay-background-rgb: #161616;
 		--cs-color-overlay-background: var(--cs-dark-overlay-background-rgb);
@@ -307,14 +307,14 @@ body[data-scheme=dark] {
 		--cs-color-primary-contrast: #000000;
 		--cs-color-secondary: var(--cs-dark-secondary-color, #CDCDCD);
 		--cs-color-secondary-contrast: #000000;
-		--cs-color-accent: var(--cs-dark-accent-color, #ffffff);
+		--cs-color-accent: var(--cs-dark-accent-color, #d00000);
 		--cs-color-border: var(--cs-dark-border-color, #343434);
 		--cs-color-video-icon: var(--cs-dark-video-icon-color);
 		--cs-color-input: var(--cs-dark-input-background, #FFFFFF);
 		--cs-color-input-contrast: var(--cs-dark-input-color);
-		--cs-color-button: var(--cs-dark-button-background, #0038ff);
+		--cs-color-button: var(--cs-dark-button-background, #d00000);
 		--cs-color-button-contrast: var(--cs-dark-button-color, #FFFFFF);
-		--cs-color-button-hover: var(--cs-dark-button-hover-background, #0033e9);
+		--cs-color-button-hover: var(--cs-dark-button-hover-background, #a80000);
 		--cs-color-button-hover-contrast:var(--cs-dark-button-hover-color, #FFFFFF);
 		--cs-dark-overlay-background-rgb: #161616;
 		--cs-color-overlay-background: var(--cs-dark-overlay-background-rgb);
@@ -1715,8 +1715,38 @@ table thead td,
 .entry-content iframe,
 .entry-content object,
 .entry-content embed {
-	max-width: 100%;
-	overflow: hidden;
+        max-width: 100%;
+        overflow: hidden;
+}
+
+.entry-video-wrapper {
+        position: relative;
+        width: 100%;
+        padding-top: 56.25%;
+        margin-bottom: 1.5rem;
+}
+.entry-video-wrapper iframe,
+.entry-video-wrapper video,
+.entry-video-wrapper embed,
+.entry-video-wrapper object {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+}
+
+.wp-block-embed.is-type-video > .wp-block-embed__wrapper {
+        position: relative;
+        padding-top: 56.25%;
+}
+.wp-block-embed.is-type-video iframe,
+.wp-block-embed.is-type-video video {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
 }
 
 .alignnone {
@@ -10777,13 +10807,27 @@ body {
 	}
 }
 .cs-social__link {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	width: 42px;
-	height: 42px;
-	text-decoration: none;
-	transition: 0.25s;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 42px;
+        height: 42px;
+        text-decoration: none;
+        transition: 0.25s;
+}
+.cs-social__link svg {
+        width: 22px;
+        height: 22px;
+        fill: currentColor;
+}
+.cs-social__link--instagram {
+        color: #E4405F;
+}
+.cs-social__link--tiktok {
+        color: #010101;
+}
+.cs-social__link--youtube {
+        color: #FF0000;
 }
 @media (prefers-color-scheme: dark) {
 	:root [data-scheme=auto] .cs-social img {
@@ -10823,9 +10867,10 @@ body {
 	width: 38px;
 	height: 38px;
 }
-.cs-header-topbar .cs-social img, .cs-follow .cs-social img {
-	width: 22px;
-	height: 22px;
+.cs-header-topbar .cs-social img, .cs-follow .cs-social img,
+.cs-header-topbar .cs-social svg, .cs-follow .cs-social svg {
+        width: 22px;
+        height: 22px;
 }
 
 .cs-site-scheme-toggle {

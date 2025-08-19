@@ -327,10 +327,10 @@ CSCO_Customizer::add_field(
 );
 
 CSCO_Customizer::add_field(
-	array(
-		'type'            => 'image',
-		'settings'        => 'misc_social_5_icon',
-		'label'           => esc_html__( 'Social 5 Icon', 'newsreader' ),
+        array(
+                'type'            => 'image',
+                'settings'        => 'misc_social_5_icon',
+                'label'           => esc_html__( 'Social 5 Icon', 'newsreader' ),
 		'description'     => esc_html__( 'Please upload the 2x version of your icon via Media Library with ', 'newsreader' ) . '<code>@2x</code>' . esc_html__( ' suffix for Retina screens support. For example ', 'newsreader' ) . '<code>logo@2x.png</code>' . esc_html__( '. Recommended width and height is 26px (52px for Retina version).', 'newsreader' ),
 		'section'         => 'miscellaneous',
 		'default'         => '',
@@ -340,14 +340,95 @@ CSCO_Customizer::add_field(
 				'operator' => '==',
 				'value'    => true,
 			),
-		),
-	)
+                ),
+        )
 );
 
 CSCO_Customizer::add_field(
-	array(
-		'type'        => 'collapsible',
-		'settings'    => 'misc_sticky_sidebar_section',
+       array(
+               'type'     => 'checkbox',
+               'settings' => 'misc_social_instagram',
+               'label'    => esc_html__( 'Display Instagram link', 'newsreader' ),
+               'section'  => 'miscellaneous',
+               'default'  => false,
+       )
+);
+
+CSCO_Customizer::add_field(
+       array(
+               'type'            => 'text',
+               'settings'        => 'misc_social_instagram_url',
+               'label'           => esc_html__( 'Instagram URL', 'newsreader' ),
+               'section'         => 'miscellaneous',
+               'default'         => '',
+               'active_callback' => array(
+                       array(
+                               'setting'  => 'misc_social_instagram',
+                               'operator' => '==',
+                               'value'    => true,
+                       ),
+               ),
+       )
+);
+
+CSCO_Customizer::add_field(
+       array(
+               'type'     => 'checkbox',
+               'settings' => 'misc_social_tiktok',
+               'label'    => esc_html__( 'Display TikTok link', 'newsreader' ),
+               'section'  => 'miscellaneous',
+               'default'  => false,
+       )
+);
+
+CSCO_Customizer::add_field(
+       array(
+               'type'            => 'text',
+               'settings'        => 'misc_social_tiktok_url',
+               'label'           => esc_html__( 'TikTok URL', 'newsreader' ),
+               'section'         => 'miscellaneous',
+               'default'         => '',
+               'active_callback' => array(
+                       array(
+                               'setting'  => 'misc_social_tiktok',
+                               'operator' => '==',
+                               'value'    => true,
+                       ),
+               ),
+       )
+);
+
+CSCO_Customizer::add_field(
+       array(
+               'type'     => 'checkbox',
+               'settings' => 'misc_social_youtube',
+               'label'    => esc_html__( 'Display YouTube link', 'newsreader' ),
+               'section'  => 'miscellaneous',
+               'default'  => false,
+       )
+);
+
+CSCO_Customizer::add_field(
+       array(
+               'type'            => 'text',
+               'settings'        => 'misc_social_youtube_url',
+               'label'           => esc_html__( 'YouTube URL', 'newsreader' ),
+               'section'         => 'miscellaneous',
+               'default'         => '',
+               'active_callback' => array(
+                       array(
+                               'setting'  => 'misc_social_youtube',
+                               'operator' => '==',
+                               'value'    => true,
+                       ),
+               ),
+       )
+);
+
+CSCO_Customizer::add_field(
+        array(
+                'type'        => 'collapsible',
+                'settings'    => 'misc_sticky_sidebar_section',
 		'label'       => esc_html__( 'Sticky Sidebar', 'newsreader' ),
 		'section'     => 'miscellaneous',
 		'input_attrs' => array(
