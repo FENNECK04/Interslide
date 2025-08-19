@@ -15305,6 +15305,20 @@ button.swiper-pagination-bullet {
 }
 
 .swiper-pagination-lock {
-	display: none;
+        display: none;
+}
+
+/*--------------------------------------------------------------
+# Video
+--------------------------------------------------------------*/
+.cs-entry__video {
+        margin-bottom: 1.5rem;
+}
+
+.cs-entry__video iframe,
+.cs-entry__video video {
+        width: 100%;
+        height: auto;
+        display: block;
 }
 /*# sourceMappingURL=style.css.map */
