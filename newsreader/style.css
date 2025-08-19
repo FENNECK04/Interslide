@@ -1734,7 +1734,7 @@ table thead td,
         left: 0;
         width: 100%;
         height: 100%;
-}
+
 
 .alignnone {
 	max-width: 100%;
@@ -10794,13 +10794,27 @@ body {
 	}
 }
 .cs-social__link {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	width: 42px;
-	height: 42px;
-	text-decoration: none;
-	transition: 0.25s;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 42px;
+        height: 42px;
+        text-decoration: none;
+        transition: 0.25s;
+}
+.cs-social__link svg {
+        width: 22px;
+        height: 22px;
+        fill: currentColor;
+}
+.cs-social__link--instagram {
+        color: #E4405F;
+}
+.cs-social__link--tiktok {
+        color: #010101;
+}
+.cs-social__link--youtube {
+        color: #FF0000;
 }
 @media (prefers-color-scheme: dark) {
 	:root [data-scheme=auto] .cs-social img {
@@ -10840,9 +10854,10 @@ body {
 	width: 38px;
 	height: 38px;
 }
-.cs-header-topbar .cs-social img, .cs-follow .cs-social img {
-	width: 22px;
-	height: 22px;
+.cs-header-topbar .cs-social img, .cs-follow .cs-social img,
+.cs-header-topbar .cs-social svg, .cs-follow .cs-social svg {
+        width: 22px;
+        height: 22px;
 }
 
 .cs-site-scheme-toggle {
