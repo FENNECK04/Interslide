@@ -13,13 +13,30 @@ CSCO_Customizer::add_section(
 );
 
 CSCO_Customizer::add_field(
-	array(
-		'type'     => 'checkbox',
-		'settings' => 'misc_published_date',
-		'label'    => esc_html__( 'Display published date instead of modified date', 'newsreader' ),
-		'section'  => 'miscellaneous',
-		'default'  => true,
-	)
+        array(
+                'type'     => 'checkbox',
+                'settings' => 'misc_published_date',
+                'label'    => esc_html__( 'Display published date instead of modified date', 'newsreader' ),
+                'section'  => 'miscellaneous',
+                'default'  => true,
+        )
+);
+
+CSCO_Customizer::add_field(
+       array(
+               'type'     => 'select',
+               'settings' => 'misc_video_aspect_ratio',
+               'label'    => esc_html__( 'Default Video Aspect Ratio', 'newsreader' ),
+               'section'  => 'miscellaneous',
+               'default'  => '16-9',
+               'choices'  => array(
+                       '16-9'   => '16:9',
+                       '9-16'   => '9:16',
+                       '4-3'    => '4:3',
+                       '1-1'    => '1:1',
+                       'per-post' => esc_html__( 'Per Post', 'newsreader' ),
+               ),
+       )
 );
 
 CSCO_Customizer::add_field(

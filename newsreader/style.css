@@ -1747,7 +1747,18 @@ table thead td,
         left: 0;
         width: 100%;
         height: 100%;
+       padding-top: var(--video-aspect-ratio, 56.25%);
+        margin-bottom: 1.5rem;
 }
+.entry-video-wrapper iframe,
+.entry-video-wrapper video,
+.entry-video-wrapper embed,
+.entry-video-wrapper object {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
 
 .alignnone {
 	max-width: 100%;
@@ -15333,6 +15344,20 @@ button.swiper-pagination-bullet {
 }
 
 .swiper-pagination-lock {
-	display: none;
+        display: none;
+}
+
+/*--------------------------------------------------------------
+# Video
+--------------------------------------------------------------*/
+.cs-entry__video {
+        margin-bottom: 1.5rem;
+}
+
+.cs-entry__video iframe,
+.cs-entry__video video {
+        width: 100%;
+        height: auto;
+        display: block;
 }
 /*# sourceMappingURL=style.css.map */
