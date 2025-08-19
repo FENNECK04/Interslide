@@ -37,6 +37,25 @@
 
                 if ( ! empty( $media ) ) {
                         echo '<div class="entry-video-wrapper">' . $media[0] . '</div>';
+
+                        // Output JSON-LD markup for the embedded video.
+                        if ( preg_match( '/src="([^"]+)"/i', $media[0], $matches ) ) {
+                                $embed_url = $matches[1];
+                                $thumbnail = get_the_post_thumbnail_url( get_the_ID(), 'full' );
+
+                                $ld_json = array_filter(
+                                        array(
+                                                '@context'     => 'https://schema.org',
+                                                '@type'        => 'VideoObject',
+                                                'name'         => get_the_title(),
+                                                'description'  => wp_strip_all_tags( get_the_excerpt() ),
+                                                'thumbnailUrl' => $thumbnail,
+                                                'embedUrl'     => esc_url( $embed_url ),
+                                        )
+                                );
+
+                                echo '<script type="application/ld+json">' . wp_json_encode( $ld_json ) . '</script>';
+                        }
                 }
 
                 // Remove first video from content to avoid duplication.
