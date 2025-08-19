@@ -62,6 +62,7 @@ if ( ! function_exists( 'csco_enqueue_scripts' ) ) {
 
 		wp_dequeue_script( sprintf( '%s-reply', 'comment' ) );
 
+
                 // Enqueue theme styles early to prevent missing CSS on fresh installs.
                 $style_uri = csco_style( get_stylesheet_uri() );
                 wp_enqueue_style( 'csco-styles', $style_uri, array(), $version );
@@ -71,6 +72,22 @@ if ( ! function_exists( 'csco_enqueue_scripts' ) ) {
 
 		// Enqueue typography styles.
 		csco_enqueue_typography_styles( 'csco-styles' );
+=======
+		// Register theme styles.
+		wp_register_style( 'csco-styles', csco_style( get_template_directory_uri() . '/style.css' ), array(), $version );
+
+                // Enqueue theme styles.
+                wp_enqueue_style( 'csco-styles' );
+
+                // Add custom overrides for Interslide.
+                wp_register_style( 'interslide-video', get_template_directory_uri() . '/assets/css/interslide-video.css', array( 'csco-styles' ), $version );
+                wp_enqueue_style( 'interslide-video' );
+
+                // Add RTL support.
+                wp_style_add_data( 'csco-styles', 'rtl', 'replace' );
+
+                // Enqueue typography styles.
+                csco_enqueue_typography_styles( 'csco-styles' );
 
 		// Dequeue Contact Form 7 styles.
 		wp_dequeue_style( 'contact-form-7' );

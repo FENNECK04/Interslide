@@ -1,0 +1,26 @@
+:root {
+  --cs-header-background: #000000;
+  --cs-header-submenu-background: #000000;
+  --cs-header-topbar-background: #ff0000;
+  --cs-footer-background: #000000;
+  --cs-offcanvas-background: #000000;
+  --cs-color-accent: #ff0000;
+  --cs-color-button: #ff0000;
+  --cs-color-button-hover: #cc0000;
+  --cs-color-video-icon: #ff0000;
+}
+
+/* Responsive video container */
+.cs-video-container,
+.entry-content .video-container {
+  position: relative;
+  width: 100%;
+}
+.cs-video-container iframe,
+.cs-video-container video,
+.entry-content .video-container iframe,
+.entry-content .video-container video {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16/9;
+}
